@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+                <div class="nav-title">
+                    <h2 style="text-align: center; color: white;">ATTENDANCE APP</h2>
+                </div>
+            </div>
+            <div class="nav-btn">
+                <label for="nav-check">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            </div>
+            <div class="nav-links">
+                <a href="attendance.html" target="_blank">Mark Attendance</a>
+                <a href="view_records.html" target="_blank">View Records</a>
+                <a href="selectdate.html" target="_blank">Select Date</a>
+            </div>
+        </div><br>
+    </header>
+    <section>
+        <h1 style="text-align: center;">View Records</h1>
+        <br>
+        <table class="table table-bordered" id="attendanceTable" style="border: 1px solid black;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Sl.no</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Rollno</th>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Course</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody id="attendanceTableBody">
+            </tbody>
+        </table>
+    </section>
+</main>
+<script>
+    var form = document.getElementById('attendanceForm');
+    var students = document.getElementById('studentsList');
+    var date = document.getElementById('attendanceDate');
+    var rollno = document.getElementById('rollNumber');
+    var classs = document.getElementById('studentClass');
+    var course = document.getElementById('studentCourse');
+    var tableBody = document.getElementById('attendanceTableBody');
+    var markAttendanceButton = document.getElementById('markAttendance');
+    var i = 0;
+
+    var attendanceData = [];
+
+    if (localStorage.getItem('attendanceData')) {
+        attendanceData = JSON.parse(localStorage.getItem('attendanceData'));
+
+        for (var j = 0; j < attendanceData.length; j++) {
+            addRowToAttendanceTable(attendanceData[j]);
+        }
+    }
+
+    function addRowToAttendanceTable(data) {
+        var row = tableBody.insertRow();
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+
+        cell1.innerHTML = data.slno;
+        cell2.innerHTML = data.date;
+        cell3.innerHTML = data.rollno;
+        cell5.innerHTML = data.classs;
+        cell6.innerHTML = data.course;
+        cell4.innerHTML = data.studentName;
+        cell7.innerHTML = data.status;
+        if (data.status === 'Present') {
+            cell7.style.color = 'green';
+        } else {
+            cell7.style.color = 'red';
+        }
+        i++;
+    }
+
+    function markAttendance() {
+        var data = {
+            slno: i + 1,
+            date: date.value,
+            rollno: rollno.value,
+            classs: classs.value,
+            course: course.value,
+            studentName: students.value !== "" ? students.options[students.selectedIndex].text : " ",
+            status: document.getElementById('attendanceStatus').checked ? 'Present' : 'Absent'
+        };
+        addRowToAttendanceTable(data);
+        attendanceData.push(data);
+        localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
+
+        i++;
+    }
+
+    markAttendanceButton.addEventListener('click', markAttendance);
+</script>
+</body>
+
+</html>

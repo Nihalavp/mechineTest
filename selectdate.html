@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance App</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+</style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+                <div class="nav-title">
+                    <h2 style="text-align: center; color: white;">ATTENDANCE APP</h2>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="nav-btn">
+                <label for="nav-check">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+            </div>
+            <div class="nav-links">
+                <a href="attendance.html" target="_blank">Mark Attendance</a>
+                <a href="view_records.html" target="_blank">View Records</a>
+                <a href="selectdate.html" target="_blank">Select Date</a>
+            </div>
+        </div>
+    </header>
+  <section>
+        <h1 style="text-align: center;">View Attendance Records</h1>
+        <div>
+            <label for="recordDate">Select Date:</label>
+            <select name="recordDate" id="recordDate" class="form-control" style="width: 500px;">
+                <option value="2023-09-15">September 21, 2023</option>
+                <option value="2023-09-14">September 20, 2023</option>
+                <option value="2023-09-15">September 19, 2023</option>
+                <option value="2023-09-14">September 18, 2023</option>
+                <option value="2023-09-15">September 17, 2023</option>
+                <option value="2023-09-14">September 16, 2023</option>
+                
+                <option value="2023-09-15">September 15, 2023</option>
+                <option value="2023-09-14">September 14, 2023</option>
+                
+            </select>
+        </div>
+        <table class="table table-bordered" id="viewRecordsTable" style="width: 500px; text-align:center;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Attendance Status</th>
+                </tr>
+            </thead>
+                <tbody id="viewRecordsTableBody">
+                     </tbody>
+            </table>
+        </section>
+          <script> 
+             function populateAttendanceRecords() {
+                var selectedDate = document.getElementById('recordDate').value;
+                var recordsTableBody = document.getElementById('viewRecordsTableBody');
+                
+                recordsTableBody.innerHTML = '';
+                var attendanceDataForSelectedDate = [
+                    { studentName: 'Nihala', status: 'Present' },
+                    { studentName: 'Riya', status: 'Present' },
+                    { studentName: 'Anu', status: 'Present' },
+                    { studentName: 'john', status: 'Absent' },
+                    { studentName: 'Mary', status: 'Present' },
+                    { studentName: 'Ziya', status: 'Absent' },
+                 
+                ];
+            
+                   attendanceDataForSelectedDate.forEach(function (record) {
+                    var row = recordsTableBody.insertRow();
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = record.studentName;
+                    cell2.innerHTML = record.status;
+                });
+            }
+            document.getElementById('recordDate').addEventListener('change', populateAttendanceRecords);
+            
+                
+
+ </script>
+</body>
+</html>
